@@ -86,4 +86,17 @@ resource "aws_lambda_function" "basic_auth" {
   runtime          = "nodejs18.x"
   description      = "Protect CloudFront distributions with Basic Authentication"
   publish          = true
+
+  ephemeral_storage {
+    size = 512
+  }
+
+  logging_config {
+    log_format = "Text"
+    log_group  = "/aws/lambda/${var.function_name}"
+  }
+
+  tracing_config {
+    mode = "PassThrough"
+  }
 }
